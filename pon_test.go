@@ -104,5 +104,14 @@ func TestMakehand(t *testing.T) {
 	if w, ok := obj.(*gtk.Window); ok {
 		window = w
 	}
+	settings, err := gtk.SettingsGetDefault()
+	if err != nil {
+		panic(err)
+	}
+	err = settings.Set("gtk-application-prefer-dark-theme", true)
+	if err != nil {
+		panic(err)
+	}
 	window.Show()
+	gtk.Main()
 }

@@ -2,12 +2,18 @@
 <!-- Generated with glade 3.19.0 -->
 <interface>
   <requires lib="gtk+" version="3.16"/>
-  <object class="GtkPopover" id="popover1">
+  <object class="GtkMenu" id="menu1">
+    <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="relative_to">menubutton1</property>
-    <property name="position">bottom</property>
     <child>
-      <placeholder/>
+      <object class="GtkCheckMenuItem" id="isDarkTheme">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="tooltip_text" translatable="yes">Use the dark application theme.</property>
+        <property name="label" translatable="yes">Dark theme</property>
+        <property name="use_underline">True</property>
+        <signal name="toggled" handler="swapTheme" swapped="no"/>
+      </object>
     </child>
   </object>
   <object class="GtkWindow" id="window1">
@@ -471,7 +477,7 @@
                     </style>
                   </object>
                   <packing>
-                    <property name="position">6</property>
+                    <property name="position">3</property>
                   </packing>
                 </child>
                 <child>
@@ -484,7 +490,7 @@
                   </object>
                   <packing>
                     <property name="pack_type">end</property>
-                    <property name="position">4</property>
+                    <property name="position">5</property>
                   </packing>
                 </child>
                 <child>
@@ -497,7 +503,7 @@
                   </object>
                   <packing>
                     <property name="pack_type">end</property>
-                    <property name="position">3</property>
+                    <property name="position">4</property>
                   </packing>
                 </child>
                 <child>
@@ -572,8 +578,8 @@
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
+            <property name="popup">menu1</property>
             <property name="direction">none</property>
-            <property name="popover">popover1</property>
             <child>
               <placeholder/>
             </child>

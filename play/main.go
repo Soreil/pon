@@ -11,7 +11,8 @@ type app struct {
 	actionBar *gtk.ActionBar
 	headerBar *gtk.HeaderBar
 	infoBar   *gtk.InfoBar
-	popover   *gtk.Popover
+	menu      *gtk.Menu
+	settings  *gtk.Settings
 }
 
 func main() {
@@ -22,6 +23,12 @@ func main() {
 	}
 	builder.AddFromFile("ui.glade")
 	var app app
+
+	settings, err := gtk.SettingsGetDefault()
+	if err != nil {
+		panic(err)
+	}
+	app.settings = settings
 
 	obj, err := builder.GetObject("window1")
 	if err != nil {
@@ -57,16 +64,28 @@ func main() {
 		app.actionBar = i
 	}
 
-	//obj, err = builder.GetObject("popover1")
-	//if err != nil {
-	//	panic(err)
-	//}
-	//if i, ok := obj.(*gtk.Popover); ok {
-	//	app.popover = i
-	//}
-	app.popover, err = gtk.PopoverNew(app.headerBar)
+	obj, err = builder.GetObject("menu1")
 	if err != nil {
 		panic(err)
+	}
+	if i, ok := obj.(*gtk.Menu); ok {
+		app.menu = i
+	}
+
+	obj, err = builder.GetObject("isDarkTheme")
+	if err != nil {
+		panic(err)
+	}
+	if i, ok := obj.(*gtk.CheckMenuItem); ok {
+		i.Connect("toggled", func() {
+			isDark, err := app.settings.GetProperty("gtk-application-prefer-dark-theme")
+			if b, ok := isDark.(bool); ok {
+				err = app.settings.Set("gtk-application-prefer-dark-theme", !b)
+			}
+			if err != nil {
+				panic(err)
+			}
+		})
 	}
 
 	go func() {
