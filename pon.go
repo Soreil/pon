@@ -1,5 +1,13 @@
 package pon
 
+import (
+	"errors"
+	"fmt"
+	"strings"
+)
+
+const tileSetSize = 136
+
 const (
 	manCount    = 9
 	pinCount    = 9
@@ -38,7 +46,7 @@ func (s suit) String() string {
 type rank int
 
 const (
-	east rank = iota
+	east rank = 10 + iota
 	south
 	west
 	north
@@ -108,9 +116,105 @@ type board struct {
 	deadWall       hand
 }
 
+func (b board) String() string {
+	var out []string
+	out = append(out, "Hands:")
+	out = append(out, fmt.Sprint(b.playerHands[0]))
+	out = append(out, fmt.Sprint(b.playerHands[1]))
+	out = append(out, fmt.Sprint(b.playerHands[2]))
+	out = append(out, fmt.Sprint(b.playerHands[3]))
+	out = append(out, "Discards:")
+	out = append(out, fmt.Sprint(b.playerDiscards[0]))
+	out = append(out, fmt.Sprint(b.playerDiscards[1]))
+	out = append(out, fmt.Sprint(b.playerDiscards[2]))
+	out = append(out, fmt.Sprint(b.playerDiscards[3]))
+	out = append(out, "Live wall:")
+	out = append(out, fmt.Sprint(b.liveWall))
+	out = append(out, "Dead wall:")
+	out = append(out, fmt.Sprint(b.deadWall))
+	return strings.Join(out, "\n")
+}
+
 type player struct {
 	name    string
 	hand    *hand
 	discard *hand
 	points  int
+}
+
+func (b *board) MakeDeadWall() error {
+	if len(b.deadWall) != 0 || len(b.liveWall) != tileSetSize {
+		return errors.New("Walls already in a broken state!")
+	}
+	b.deadWall = b.liveWall[:14]
+	b.liveWall = b.liveWall[14:]
+	return nil
+}
+
+//Creates a new board
+func MakeBoard() (board, error) {
+	tiles := make(map[suit][]tile)
+	var tileSet [4]map[suit][]tile
+
+	tiles[man] = make([]tile, manCount)
+	for i := range tiles[man] {
+		tiles[man][i].suit = man
+	}
+	tiles[pin] = make([]tile, pinCount)
+	for i := range tiles[pin] {
+		tiles[pin][i].suit = pin
+	}
+	tiles[circle] = make([]tile, circleCount)
+	for i := range tiles[circle] {
+		tiles[circle][i].suit = circle
+	}
+	tiles[wind] = make([]tile, windCount)
+	for i := range tiles[wind] {
+		tiles[wind][i].suit = wind
+	}
+	tiles[dragon] = make([]tile, dragonCount)
+	for i := range tiles[dragon] {
+		tiles[dragon][i].suit = dragon
+	}
+
+	tileSet[0] = tiles
+	tileSet[1] = tiles
+	tileSet[2] = tiles
+	tileSet[3] = tiles
+
+	var count int
+	for suit := range tileSet {
+		for value := range tileSet[suit] {
+			for i := range tileSet[suit][value] {
+				count++
+				tileSet[suit][value][i].rank = rank(i)
+			}
+		}
+	}
+
+	if count != tileSetSize {
+		return board{}, errors.New(fmt.Sprintf("Tilecount wrong, expected:%d, got: %d\n", tileSetSize, count))
+	}
+
+	//Make Red tiles
+	tileSet[0][man][4].isRed = true
+	tileSet[0][pin][4].isRed = true
+	tileSet[0][circle][4].isRed = true
+
+	var b board
+
+	for suit := range tileSet {
+		for value := range tileSet[suit] {
+			for _, v := range tileSet[suit][value] {
+				b.liveWall = append(b.liveWall, struct {
+					tile
+					open bool
+				}{v, false})
+			}
+		}
+	}
+	if err := b.MakeDeadWall(); err != nil {
+		return board{}, err
+	}
+	return b, nil
 }

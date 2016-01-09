@@ -6,11 +6,13 @@
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <child>
-      <object class="GtkRadioMenuItem" id="themeswitch">
+      <object class="GtkCheckMenuItem" id="isDarkTheme">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
+        <property name="tooltip_text" translatable="yes">Use the dark application theme.</property>
         <property name="label" translatable="yes">Dark theme</property>
         <property name="use_underline">True</property>
+        <signal name="toggled" handler="swapTheme" swapped="no"/>
       </object>
     </child>
   </object>
