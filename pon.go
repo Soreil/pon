@@ -6,8 +6,10 @@ import (
 	"strings"
 )
 
+//Riichi rules
 const tileSetSize = 136
 
+//No flowers and stuff because riichi
 const (
 	manCount    = 9
 	pinCount    = 9
@@ -26,6 +28,7 @@ const (
 	dragon
 )
 
+//Here we have mixed west east technically I think
 func (s suit) String() string {
 	switch s {
 	case man:
@@ -45,6 +48,7 @@ func (s suit) String() string {
 
 type rank int
 
+//Offset to not overlap with natural numbers
 const (
 	east rank = 10 + iota
 	south
@@ -56,6 +60,7 @@ const (
 	green
 )
 
+//TODO(sjon): How to handle western vs eastern representation?
 func (r rank) String() string {
 	switch r {
 	case east:
@@ -80,13 +85,15 @@ func (r rank) String() string {
 type tile struct {
 	suit
 	rank
-	isRed bool
+	isRed bool //TODO(sjon): maybe turn outside of the tile some way? or as part of the rank?
 }
 
+//returns Unicode representation of the tile
 func (t tile) String() string {
 	//First unicode character,they are stacked back to back
 	base := '\U0001F000'
 	var char rune
+	//the adds are unicode offsets, as we can see wind dragon and natural numbers are already on the right offset by pure chance
 	switch t.suit {
 	case man:
 		char = base + windCount + dragonCount
@@ -109,6 +116,7 @@ type hand []struct {
 	open bool
 }
 
+//playerHands and playerDiscards are accessed by (pointers?) from the players' respective datastructure
 type board struct {
 	playerHands    [4]hand
 	playerDiscards [4]hand
