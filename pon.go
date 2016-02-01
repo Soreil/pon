@@ -111,6 +111,7 @@ func (t tile) String() string {
 	return string(char + rune(t.rank))
 }
 
+//open means the tile should be visible to the players
 type hand []struct {
 	tile
 	open bool
@@ -143,13 +144,6 @@ func (b board) String() string {
 	return strings.Join(out, "\n")
 }
 
-type player struct {
-	name    string
-	hand    *hand
-	discard *hand
-	points  int
-}
-
 func (b *board) MakeDeadWall() error {
 	if len(b.deadWall) != 0 || len(b.liveWall) != tileSetSize {
 		return errors.New("Walls already in a broken state!")
@@ -157,6 +151,22 @@ func (b *board) MakeDeadWall() error {
 	b.deadWall = b.liveWall[:14]
 	b.liveWall = b.liveWall[14:]
 	return nil
+}
+
+func (h *hand) draw() (tile, error) {
+	if len(*h) == 0 {
+		return tile{}, errors.New("No tiles to draw")
+	}
+	drawn := (*h)[0].tile
+	(*h) = (*h)[1:]
+	return drawn, nil
+}
+
+func (h *hand) add(t tile) {
+	*h = append(*h, struct {
+		tile
+		open bool
+	}{tile: t, open: false})
 }
 
 //Creates a new board
