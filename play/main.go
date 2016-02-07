@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/gotk3/gotk3/gtk"
@@ -72,6 +73,7 @@ func main() {
 		app.menu = i
 	}
 
+	//Switch application theme
 	obj, err = builder.GetObject("isDarkTheme")
 	if err != nil {
 		panic(err)
@@ -88,8 +90,33 @@ func main() {
 		})
 	}
 
+	//Enable action buttons
+	obj, err = builder.GetObject("isActionsEnabled")
+	if err != nil {
+		panic(err)
+	}
+	if i, ok := obj.(*gtk.CheckMenuItem); ok {
+		i.Connect("toggled", func() {
+			widget, err := app.actionBar.GetChild()
+			if err != nil {
+				panic(err)
+			}
+			revealerChild, err := gtk.Bin(widget).GetChild()
+			if err != nil {
+				panic(err)
+			}
+
+			name, err := revealerChild.GetName()
+			if err != nil {
+				panic(err)
+			}
+
+			fmt.Println(name)
+		})
+	}
+
 	go func() {
-		for i := 0; ; i++ {
+		for {
 			<-time.After(2 * time.Second)
 			toggle(app.infoBar)
 			toggle(app.actionBar)
