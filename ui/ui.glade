@@ -60,8 +60,8 @@ Author: Sjon Kosse
   </object>
   <object class="GtkWindow" id="window1">
     <property name="can_focus">False</property>
-    <property name="default_width">480</property>
-    <property name="default_height">640</property>
+    <property name="icon">../img/210138_hibike-euphonium-kousaka-reina-oumae-kumiko.jpg</property>
+    <property name="has_resize_grip">True</property>
     <child>
       <object class="GtkStack" id="bodyContainer">
         <property name="visible">True</property>
@@ -140,10 +140,10 @@ Author: Sjon Kosse
               <object class="GtkGrid" id="Tiles">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="hexpand">True</property>
+                <property name="vexpand">True</property>
                 <property name="row_spacing">8</property>
                 <property name="column_spacing">8</property>
-                <property name="row_homogeneous">True</property>
-                <property name="column_homogeneous">True</property>
                 <child>
                   <object class="GtkFlowBox" id="northTiles">
                     <property name="visible">True</property>
@@ -254,8 +254,8 @@ Author: Sjon Kosse
                         <property name="stack">stackEast</property>
                       </object>
                       <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
+                        <property name="expand">True</property>
+                        <property name="fill">False</property>
                         <property name="position">0</property>
                       </packing>
                     </child>
@@ -320,26 +320,31 @@ Author: Sjon Kosse
                       <object class="GtkStack" id="stackNorth">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="hhomogeneous">False</property>
+                        <property name="vhomogeneous">False</property>
                         <property name="transition_type">crossfade</property>
+                        <property name="interpolate_size">True</property>
                         <child>
                           <object class="GtkTextView" id="textview1">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                           </object>
                           <packing>
-                            <property name="name">page0</property>
-                            <property name="title" translatable="yes">page0</property>
+                            <property name="name">description</property>
+                            <property name="title" translatable="yes">Description</property>
                           </packing>
                         </child>
                         <child>
                           <object class="GtkImage" id="image1">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
+                            <property name="hexpand">False</property>
+                            <property name="vexpand">False</property>
                             <property name="stock">gtk-missing-image</property>
                           </object>
                           <packing>
-                            <property name="name">page1</property>
-                            <property name="title" translatable="yes">page1</property>
+                            <property name="name">avatar</property>
+                            <property name="title" translatable="yes">Avatar</property>
                             <property name="position">1</property>
                           </packing>
                         </child>
@@ -479,7 +484,6 @@ Author: Sjon Kosse
             </child>
             <child>
               <object class="GtkActionBar" id="moves">
-                <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <child>
                   <object class="GtkButton" id="ron">
@@ -579,8 +583,8 @@ Author: Sjon Kosse
             </child>
           </object>
           <packing>
-            <property name="name">page0</property>
-            <property name="title" translatable="yes">page0</property>
+            <property name="name">game</property>
+            <property name="title" translatable="yes">Game</property>
           </packing>
         </child>
         <child>
@@ -592,8 +596,8 @@ Author: Sjon Kosse
             <property name="day">31</property>
           </object>
           <packing>
-            <property name="name">page1</property>
-            <property name="title" translatable="yes">page1</property>
+            <property name="name">info</property>
+            <property name="title" translatable="yes">Info</property>
             <property name="position">1</property>
           </packing>
         </child>
@@ -639,5 +643,14 @@ Author: Sjon Kosse
         </child>
       </object>
     </child>
+  </object>
+  <object class="GtkSizeGroup" id="sizegroup1">
+    <property name="mode">both</property>
+    <widgets>
+      <widget name="eastInfo"/>
+      <widget name="northInfo"/>
+      <widget name="westInfo"/>
+      <widget name="southInfo"/>
+    </widgets>
   </object>
 </interface>

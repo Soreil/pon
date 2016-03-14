@@ -29,7 +29,9 @@ func main() {
 		panic(err)
 	}
 
+	//Handle quit signal
 	app.window.Connect("destroy", gtk.MainQuit)
+	//Handle collapsing indicator
 	app.infoBar.Connect("response", app.infoBar.Hide)
 
 	//Switch application theme
@@ -48,6 +50,7 @@ func main() {
 		for _, v := range app.buttons {
 			v.SetSensitive(!v.GetSensitive())
 		}
+		toggle(app.actionBar)
 	})
 
 	//go func() {
