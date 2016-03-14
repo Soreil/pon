@@ -2,7 +2,6 @@ package main
 
 import (
 	"os"
-	"time"
 
 	"github.com/gotk3/gotk3/gtk"
 )
@@ -16,6 +15,7 @@ type app struct {
 	settings         *gtk.Settings
 	isDarkTheme      *gtk.CheckMenuItem
 	isActionsEnabled *gtk.CheckMenuItem
+	buttons          map[string]*gtk.Button
 }
 
 func init() {
@@ -45,32 +45,19 @@ func main() {
 
 	//Enable action buttons
 	app.isActionsEnabled.Connect("toggled", func() {
-		//widget, err := app.actionBar.GetChild()
-		//if err != nil {
-		//	panic(err)
-		//}
-		//revealerChild, err := gtk.Bin(widget).GetChild()
-		//if err != nil {
-		//	panic(err)
-		//}
-
-		//name, err := revealerChild.GetName()
-		//if err != nil {
-		//	panic(err)
-		//}
-
-		//fmt.Println(name)
+		for _, v := range app.buttons {
+			v.SetSensitive(!v.GetSensitive())
+		}
 	})
 
-	go func() {
-		for {
-			<-time.After(2 * time.Second)
-			toggle(app.infoBar)
-			toggle(app.actionBar)
-		}
-	}()
+	//go func() {
+	//	for {
+	//		<-time.After(2 * time.Second)
+	//		toggle(app.infoBar)
+	//		toggle(app.actionBar)
+	//	}
+	//}()
 	app.window.Show()
-	defer gtk.MainQuit()
 	gtk.Main()
 }
 
@@ -81,6 +68,7 @@ func GetObjects(builderFile string) (app, error) {
 	}
 	builder.AddFromFile(builderFile)
 	var app app
+	app.buttons = make(map[string]*gtk.Button)
 
 	settings, err := gtk.SettingsGetDefault()
 	if err != nil {
@@ -110,7 +98,7 @@ func GetObjects(builderFile string) (app, error) {
 	if i, ok := obj.(*gtk.InfoBar); ok {
 		app.infoBar = i
 	}
-	obj, err = builder.GetObject("actionbar1")
+	obj, err = builder.GetObject("moves")
 	if err != nil {
 		return app, err
 	}
@@ -139,6 +127,16 @@ func GetObjects(builderFile string) (app, error) {
 	}
 	if i, ok := obj.(*gtk.CheckMenuItem); ok {
 		app.isActionsEnabled = i
+	}
+
+	for _, name := range []string{"kan", "pon", "riichi", "tsumo", "ron", "chi"} {
+		obj, err = builder.GetObject(name)
+		if err != nil {
+			return app, err
+		}
+		if i, ok := obj.(*gtk.Button); ok {
+			app.buttons[name] = i
+		}
 	}
 	return app, nil
 }
