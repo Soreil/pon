@@ -332,7 +332,7 @@ Author: Sjon Kosse
   </object>
   <object class="GtkWindow" id="window1">
     <property name="can_focus">False</property>
-    <property name="icon">../img/210138_hibike-euphonium-kousaka-reina-oumae-kumiko.jpg</property>
+    <property name="icon_name">gnome-mahjongg-symbolic</property>
     <property name="has_resize_grip">True</property>
     <child>
       <object class="GtkStack" id="bodyContainer">
@@ -349,6 +349,8 @@ Author: Sjon Kosse
                 <property name="visible">True</property>
                 <property name="app_paintable">True</property>
                 <property name="can_focus">False</property>
+                <property name="valign">start</property>
+                <property name="homogeneous">True</property>
                 <property name="baseline_position">top</property>
                 <property name="show_close_button">True</property>
                 <child internal-child="action_area">
@@ -414,14 +416,11 @@ Author: Sjon Kosse
                 <property name="can_focus">False</property>
                 <property name="hexpand">True</property>
                 <property name="vexpand">True</property>
-                <property name="row_spacing">8</property>
-                <property name="column_spacing">8</property>
                 <child>
                   <object class="GtkFlowBox" id="northTiles">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="valign">start</property>
-                    <property name="homogeneous">True</property>
                     <property name="min_children_per_line">7</property>
                     <child>
                       <object class="GtkFlowBoxChild">
@@ -667,6 +666,8 @@ Author: Sjon Kosse
                   <object class="GtkGrid" id="discardPiles">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
+                    <property name="halign">center</property>
+                    <property name="valign">center</property>
                     <property name="row_spacing">4</property>
                     <property name="column_spacing">4</property>
                     <property name="row_homogeneous">True</property>
@@ -675,21 +676,6 @@ Author: Sjon Kosse
                       <object class="GtkFlowBox" id="westDiscardPile">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <child>
-                          <object class="GtkFlowBoxChild">
-                            <property name="width_request">100</property>
-                            <property name="height_request">80</property>
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <child>
-                              <object class="GtkImage">
-                                <property name="visible">True</property>
-                                <property name="can_focus">False</property>
-                                <property name="pixbuf">../img/tiles/MJ5rbing.svg</property>
-                              </object>
-                            </child>
-                          </object>
-                        </child>
                       </object>
                       <packing>
                         <property name="left_attach">0</property>
@@ -700,21 +686,6 @@ Author: Sjon Kosse
                       <object class="GtkFlowBox" id="northDiscardPile">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <child>
-                          <object class="GtkFlowBoxChild">
-                            <property name="width_request">100</property>
-                            <property name="height_request">80</property>
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <child>
-                              <object class="GtkImage">
-                                <property name="visible">True</property>
-                                <property name="can_focus">False</property>
-                                <property name="pixbuf">../img/tiles/MJ5rbing.svg</property>
-                              </object>
-                            </child>
-                          </object>
-                        </child>
                       </object>
                       <packing>
                         <property name="left_attach">0</property>
@@ -725,21 +696,6 @@ Author: Sjon Kosse
                       <object class="GtkFlowBox" id="eastDiscardPile">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <child>
-                          <object class="GtkFlowBoxChild">
-                            <property name="width_request">100</property>
-                            <property name="height_request">80</property>
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <child>
-                              <object class="GtkImage">
-                                <property name="visible">True</property>
-                                <property name="can_focus">False</property>
-                                <property name="pixbuf">../img/tiles/MJ5rbing.svg</property>
-                              </object>
-                            </child>
-                          </object>
-                        </child>
                       </object>
                       <packing>
                         <property name="left_attach">1</property>
@@ -750,21 +706,6 @@ Author: Sjon Kosse
                       <object class="GtkFlowBox" id="southDiscardPile">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <child>
-                          <object class="GtkFlowBoxChild">
-                            <property name="width_request">100</property>
-                            <property name="height_request">80</property>
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <child>
-                              <object class="GtkImage">
-                                <property name="visible">True</property>
-                                <property name="can_focus">False</property>
-                                <property name="pixbuf">../img/tiles/MJ5rbing.svg</property>
-                              </object>
-                            </child>
-                          </object>
-                        </child>
                       </object>
                       <packing>
                         <property name="left_attach">1</property>
@@ -808,7 +749,6 @@ Author: Sjon Kosse
                             <property name="visible">True</property>
                             <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
-                            <property name="halign">start</property>
                             <property name="editable">False</property>
                             <property name="cursor_visible">False</property>
                             <property name="buffer">textbuffer1</property>
@@ -820,7 +760,7 @@ Author: Sjon Kosse
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkImage" id="image2">
+                          <object class="GtkImage" id="avatarEast">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="stock">gtk-missing-image</property>
@@ -875,7 +815,6 @@ Author: Sjon Kosse
                             <property name="visible">True</property>
                             <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
-                            <property name="halign">start</property>
                             <property name="editable">False</property>
                             <property name="cursor_visible">False</property>
                             <property name="buffer">textbuffer2</property>
@@ -887,7 +826,7 @@ Author: Sjon Kosse
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkImage" id="image1">
+                          <object class="GtkImage" id="avatarNorth">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="hexpand">False</property>
@@ -944,7 +883,6 @@ Author: Sjon Kosse
                             <property name="visible">True</property>
                             <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
-                            <property name="halign">start</property>
                             <property name="editable">False</property>
                             <property name="cursor_visible">False</property>
                             <property name="buffer">textbuffer3</property>
@@ -956,7 +894,7 @@ Author: Sjon Kosse
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkImage">
+                          <object class="GtkImage" id="avatarWest">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="stock">gtk-missing-image</property>
@@ -1005,15 +943,12 @@ Author: Sjon Kosse
                       <object class="GtkStack" id="stackSouth">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="halign">start</property>
                         <property name="transition_type">crossfade</property>
                         <child>
                           <object class="GtkTextView" id="textview3">
                             <property name="visible">True</property>
                             <property name="sensitive">False</property>
                             <property name="can_focus">False</property>
-                            <property name="halign">end</property>
-                            <property name="valign">end</property>
                             <property name="editable">False</property>
                             <property name="cursor_visible">False</property>
                             <property name="buffer">textbuffer4</property>
@@ -1025,7 +960,7 @@ Author: Sjon Kosse
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkImage" id="image4">
+                          <object class="GtkImage" id="avatarSouth">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="stock">gtk-missing-image</property>
@@ -1050,12 +985,11 @@ Author: Sjon Kosse
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkFlowBox" id="northTiles1">
+                  <object class="GtkFlowBox" id="eastTiles">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="halign">end</property>
                     <property name="orientation">vertical</property>
-                    <property name="homogeneous">True</property>
                     <property name="min_children_per_line">7</property>
                     <child>
                       <object class="GtkFlowBoxChild">
@@ -1298,11 +1232,10 @@ Author: Sjon Kosse
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkFlowBox" id="northTiles2">
+                  <object class="GtkFlowBox" id="southTiles">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="valign">end</property>
-                    <property name="homogeneous">True</property>
                     <property name="min_children_per_line">7</property>
                     <child>
                       <object class="GtkFlowBoxChild">
@@ -1545,12 +1478,11 @@ Author: Sjon Kosse
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkFlowBox" id="northTiles3">
+                  <object class="GtkFlowBox" id="westTiles">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="halign">start</property>
                     <property name="orientation">vertical</property>
-                    <property name="homogeneous">True</property>
                     <property name="min_children_per_line">7</property>
                     <child>
                       <object class="GtkFlowBoxChild">
@@ -1802,6 +1734,7 @@ Author: Sjon Kosse
             <child>
               <object class="GtkActionBar" id="moves">
                 <property name="can_focus">False</property>
+                <property name="valign">end</property>
                 <child>
                   <object class="GtkButton" id="ron">
                     <property name="label" translatable="yes">Ron</property>
@@ -1850,8 +1783,8 @@ Author: Sjon Kosse
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkButton" id="kan">
-                    <property name="label" translatable="yes">Kan</property>
+                  <object class="GtkButton" id="pon">
+                    <property name="label" translatable="yes">Pon</property>
                     <property name="visible">True</property>
                     <property name="sensitive">False</property>
                     <property name="can_focus">True</property>
@@ -1863,8 +1796,8 @@ Author: Sjon Kosse
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkButton" id="pon">
-                    <property name="label" translatable="yes">Pon</property>
+                  <object class="GtkButton" id="kan">
+                    <property name="label" translatable="yes">Kan</property>
                     <property name="visible">True</property>
                     <property name="sensitive">False</property>
                     <property name="can_focus">True</property>

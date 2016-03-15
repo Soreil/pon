@@ -1,8 +1,12 @@
 package main
 
 import (
+	"fmt"
+	"math/rand"
 	"os"
+	"time"
 
+	"github.com/gotk3/gotk3/gdk"
 	"github.com/gotk3/gotk3/gtk"
 )
 
@@ -16,18 +20,35 @@ type app struct {
 	isDarkTheme      *gtk.CheckMenuItem
 	isActionsEnabled *gtk.CheckMenuItem
 	buttons          map[string]*gtk.Button
+	playerImages     map[int][]*gtk.Image
+	playerAvatar     map[int]*gtk.Image
+	images           map[string]*gdk.Pixbuf
 }
 
 func init() {
 	gtk.Init(&os.Args)
+	rand.Seed(time.Now().UnixNano())
 }
 
 func main() {
 	const builderFile = "../ui/ui.glade"
+
+	//Experimentation
+	const tilePath = "../img/tiles"
 	app, err := GetObjects(builderFile)
 	if err != nil {
 		panic(err)
 	}
+
+	app.images, err = GetImages(tilePath)
+	if err != nil {
+		panic(err)
+	}
+
+	for _, pixbuf := range app.images {
+		app.playerImages[rand.Intn(3)][rand.Intn(12)].SetFromPixbuf(pixbuf)
+	}
+	//
 
 	//Handle quit signal
 	app.window.Connect("destroy", gtk.MainQuit)
@@ -53,13 +74,6 @@ func main() {
 		toggle(app.actionBar)
 	})
 
-	//go func() {
-	//	for {
-	//		<-time.After(2 * time.Second)
-	//		toggle(app.infoBar)
-	//		toggle(app.actionBar)
-	//	}
-	//}()
 	app.window.Show()
 	gtk.Main()
 }
@@ -132,6 +146,20 @@ func GetObjects(builderFile string) (app, error) {
 		app.isActionsEnabled = i
 	}
 
+	app.playerImages = make(map[int][]*gtk.Image)
+	for player := 0; player < 4; player++ {
+		app.playerImages[player] = make([]*gtk.Image, 13)
+		for tile := 1; tile < 14; tile++ {
+			obj, err = builder.GetObject("tile" + fmt.Sprint(tile+player*13))
+			if err != nil {
+				return app, err
+			}
+			if i, ok := obj.(*gtk.Image); ok {
+				app.playerImages[player][tile-1] = i
+			}
+		}
+	}
+
 	for _, name := range []string{"kan", "pon", "riichi", "tsumo", "ron", "chi"} {
 		obj, err = builder.GetObject(name)
 		if err != nil {
@@ -156,4 +184,23 @@ func toggle(h hideShower) {
 	} else {
 		h.Show()
 	}
+}
+
+func GetImages(path string) (map[string]*gdk.Pixbuf, error) {
+	dir, err := os.Open(path)
+	if err != nil {
+		return nil, err
+	}
+	names, err := dir.Readdirnames(0)
+	if err != nil {
+		return nil, err
+	}
+	images := make(map[string]*gdk.Pixbuf)
+	for _, name := range names {
+		images[name], err = gdk.PixbufNewFromFileAtScale(path+string(os.PathSeparator)+name, 32, 32, true)
+		if err != nil {
+			return images, err
+		}
+	}
+	return images, nil
 }
